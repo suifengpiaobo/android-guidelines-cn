@@ -83,29 +83,31 @@ menu文件命名和layout文件类似。应该和安卓组件匹配。举个栗�
 
 在values文件夹下的文件应该是复数形式，比如： `strings.xml`, `styles.xml`, `colors.xml`, `dimens.xml`, `attrs.xml`。
 
-# 2 Code guidelines
+# 2 代码规范
 
-## 2.1 Java language rules
+## 2.1 Java 语言规则
 
-### 2.1.1 Don't ignore exceptions
+### 2.1.1 请勿忽略异常
 
-You must never do the following:
+你一定不能这样做:
 
 ```java
 void setServerPort(String value) {
     try {
         serverPort = Integer.parseInt(value);
-    } catch (NumberFormatException e) { }
+    } catch (NumberFormatException e) {
+		// do something
+	}
 }
 ```
 
-_While you may think that your code will never encounter this error condition or that it is not important to handle it, ignoring exceptions like above creates mines in your code for someone else to trip over some day. You must handle every Exception in your code in some principled way. The specific handling varies depending on the case._ - ([Android code style guidelines](https://source.android.com/source/code-style.html))
+_你可能会认为这个异常情况永远不会出现，或者没必要处理它。忽略异常就像挖了个坑在你的代码里，没准哪天别人就掉进去了。你必须以某种原则性的方法处理所有异常。具体处理根据情况而有所不同。_- ([Android code style guidelines](https://source.android.com/source/code-style.html))
 
-See alternatives [here](https://source.android.com/source/code-style.html#dont-ignore-exceptions).
+更多资料请查询官网 [here](https://source.android.com/source/code-style.html#dont-ignore-exceptions)。
 
-### 2.1.2 Don't catch generic exception
+### 2.1.2 不要只捕获基类异常（Throwable、Exception）
 
-You should not do this:
+你不应该这样写:
 
 ```java
 try {
@@ -118,33 +120,37 @@ try {
 }
 ```
 
-See the reason why and some alternatives [here](https://source.android.com/source/code-style.html#dont-catch-generic-exception)
+更多资料请查询官网 [here](https://source.android.com/source/code-style.html#dont-catch-generic-exception)
 
-### 2.1.3 Don't use finalizers
+### 2.1.3 不要使用 finalizers
 
-_We don't use finalizers. There are no guarantees as to when a finalizer will be called, or even that it will be called at all. In most cases, you can do what you need from a finalizer with good exception handling. If you absolutely need it, define a `close()` method (or the like) and document exactly when that method needs to be called. See `InputStream` for an example. In this case it is appropriate but not required to print a short log message from the finalizer, as long as it is not expected to flood the logs._ - ([Android code style guidelines](https://source.android.com/source/code-style.html#dont-use-finalizers))
+_我们不使用finalizers。因为没办法保证一个finalizers何时被调用，甚至不知它是否会被调用。大部分情况下，你能做的只是在一个finalizers里处理好异常。如果确实需要它，那就定义一个`close()`方法（或者类似）并且附上正确的使用文档。以`InputStream`为例，在这种情况下它是合适的，但是不需要打印一个简短的finalizers日志消息，只要它不会淹没日志。_ - ([Android code style guidelines](https://source.android.com/source/code-style.html#dont-use-finalizers))
 
 
-### 2.1.4 Fully qualify imports
+### 2.1.4 全路径导包
 
 This is bad: `import foo.*;`
 
 This is good: `import foo.Bar;`
 
-See more info [here](https://source.android.com/source/code-style.html#fully-qualify-imports)
+查询更新消息 [here](https://source.android.com/source/code-style.html#fully-qualify-imports)
 
-## 2.2 Java style rules
+## 2.2 Java 代码风格
 
-### 2.2.1 Fields definition and naming
+### 2.2.1 字段的定义和命名
 
-Fields should be defined at the __top of the file__ and they should follow the naming rules listed below.
+所有字段应该定义在 __文件顶部__ 并且应该遵守以下命名规则。
 
 * Private, non-static field names start with __m__.
+* 私有， 非静态字段名称以__m__ 开头。
 * Private, static field names start with __s__.
+* 私有， 静态字段名称以__s__ 开头。
 * Other fields start with a lower case letter.
+* 其它字段小写字母开头。
 * Static final fields (constants) are ALL_CAPS_WITH_UNDERSCORES.
+* 静态final类型（常量）定义为全大写+下划线，比如：HAPPY_NEW_YEAR。
 
-Example:
+代码示例:
 
 ```java
 public class MyClass {
@@ -157,7 +163,7 @@ public class MyClass {
 }
 ```
 
-### 2.2.3 Treat acronyms as words
+### 2.2.3 Treat acronyms as words 字母缩写
 
 | Good           | Bad            |
 | -------------- | -------------- |
@@ -166,9 +172,9 @@ public class MyClass {
 | `String url`     | `String URL`     |
 | `long id`        | `long ID`        |
 
-### 2.2.4 Use spaces for indentation
+### 2.2.4 空格缩进（建议code_style配合ide使用）
 
-Use __4 space__ indents for blocks:
+代码块的缩进:
 
 ```java
 if (x == 1) {
@@ -176,16 +182,16 @@ if (x == 1) {
 }
 ```
 
-Use __8 space__ indents for line wraps:
+换行的缩进:
 
 ```java
 Instrument i =
         someLongExpression(that, wouldNotFit, on, one, line);
 ```
 
-### 2.2.5 Use standard brace style
+### 2.2.5 使用标准的括号风格（建议code_style配合ide使用）
 
-Braces go on the same line as the code before them.
+括号在它们之前与代码保持同一行。
 
 ```java
 class MyClass {
@@ -201,9 +207,9 @@ class MyClass {
 }
 ```
 
-Braces around the statements are required unless the condition and the body fit on one line.
+括号应该包围语句， 除非条件和身体 适应在同一行。
 
-If the condition and the body fit on one line and that line is shorter than the max line length, then braces are not required, e.g.
+如果条件和身体适应同一行，同时这行的长度小于最大行长，那么括号不不需要，比如：
 
 ```java
 if (condition) body();
@@ -216,9 +222,9 @@ if (condition)
     body();  // bad!
 ```
 
-### 2.2.6 Annotations
+### 2.2.6 Annotations 注解
 
-#### 2.2.6.1 Annotations practices
+#### 2.2.6.1 Annotations practices 注解实践
 
 According to the Android code style guide, the standard practices for some of the predefined annotations in Java are:
 
