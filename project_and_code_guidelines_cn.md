@@ -228,13 +228,15 @@ if (condition)
 
 根据安卓代码风格指南，在Java中的一些预定义注解的标准做法是：
 
-* `@Override`：在方法重写申明或者从父类实现时必须使用 @Override注解。举个栗子，如果你使用@inheritdocs Javadoc 标签，并且定义在一个类中（非接口），你必须也在父类中使用@Override来注解改方法。
+* `@Override`: The @Override annotation __must be used__ whenever a method overrides the declaration or implementation from a super-class. For example, if you use the @inheritdocs Javadoc tag, and derive from a class (not an interface), you must also annotate that the method @Overrides the parent class's method.
+* `@Override`：在方法重写申明或者从父类实现时必须使用 @Override注解。举个栗子，如果你使用@inheritdocs Javadoc 标签，并且定义在一个类中（非接口），你必须也在父类中使用@Override来注解该方法。
 
+* `@SuppressWarnings`: The @SuppressWarnings annotation should only be used under circumstances where it is impossible to eliminate a warning. If a warning passes this "impossible to eliminate" test, the @SuppressWarnings annotation must be used, so as to ensure that all warnings reflect actual problems in the code.
 * `@SuppressWarnings`: 在不可能消除警告的情况下应该使用@SuppressWarnings注解。如果警告通过这个“不可能消除”测试，那么@SuppressWarnings注解必须被使用，以便确保所有警告反映代码中的实际问题。
 
 更多关于注解指导文档 [here](http://source.android.com/source/code-style.html#use-standard-java-annotations)。
 
-#### 2.2.6.2 Annotations style
+#### 2.2.6.2 Annotations 样式
 
 __Classes, Methods and Constructors__
 
@@ -257,9 +259,9 @@ __Fields__
 
 ### 2.2.7 Limit variable scope 限制变量作用域
 
-_局部变量的作用范围应该控制到最小（Effective Java Item 29）。通过这样做，你提高了代码的可读性和可维护性，减少了错误的可能性。每个变量都应该在语句块内被声明和使用。_
+局部变量的作用范围应该控制到最小（Effective Java Item 29）。通过这样做，你提高了代码的可读性和可维护性，减少了错误的可能性。每个变量都应该在语句块内被声明和使用。
 
-_局部变量应该在第一次使用时完成声明。几乎每一个局部变量声明必须包含一个初始化。如果你还没有足够的信息来初始化一个变量是明智的，你应该推迟直到你要使用时在完成声明。_- ([Android code style guidelines](https://source.android.com/source/code-style.html#limit-variable-scope))
+局部变量应该在第一次使用时完成声明。几乎每一个局部变量声明必须包含一个初始化。如果你还没有足够的信息来初始化一个变量是明智的，你应该推迟直到你要使用时在完成声明。- ([Android code style guidelines](https://source.android.com/source/code-style.html#limit-variable-scope))
 
 
 ### 2.2.8 Order import statements 导包语句的顺序
@@ -284,7 +286,7 @@ To exactly match the IDE settings, the imports should be:
 
 ### 2.2.9 Logging guidelines 日志
 
-使用`Log`类提供的打印log的方法，你可以打印错误消息或者其它消息，这样有助于开发者识别和发现问题：
+使用`Log`类提供的打印log的方法，你可以打印错误消息或者其它消息，这样有助于开发者识别和定位问题：
 
 * `Log.v(String tag, String msg)` (verbose)
 * `Log.d(String tag, String msg)` (debug)
@@ -446,6 +448,7 @@ public static UserFragment newInstance(User user) {
 ```
 
 __Note 1__: 这些方法应该放在类的顶部，在方法`onCreate()`前。
+
 __Note 2__: 如果我们在顶部声明了这些方法，那些用于extras和arguments的keys(常量字符串)应该定义为`private`，因为它们已经不需要对外部类提供访问权限了。
 
 ### 2.2.15 Line length limit 行长度限制
@@ -496,7 +499,7 @@ Picasso.with(context)
 
 __很多参数的情况__
 
-当一个方法有很多参数或者它的参数很长，我们应该在每一个逗号`,`前换行。
+当一个方法有很多参数或者它的参数很长，我们应该在每一个逗号`,`后换行。
 
 ```java
 loadPicture(context, "http://ribot.co.uk/images/sexyjoe.jpg", mImageViewProfilePicture, clickListener, "Title of the picture");
@@ -536,6 +539,7 @@ public Observable<Location> syncLocations() {
 ### 2.3.1 自关闭标签
 
 当一个XML元素没有子元素时，你**必须**使用自关闭标签。
+
 This is good:
 
 ```xml
