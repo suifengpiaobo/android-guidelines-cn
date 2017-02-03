@@ -540,7 +540,7 @@ public Observable<Location> syncLocations() {
 
 当一个XML元素没有子元素时，你**必须**使用自关闭标签。
 
-This is good:
+This is __good__:
 
 ```xml
 <TextView
