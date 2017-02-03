@@ -226,19 +226,19 @@ if (condition)
 
 #### 2.2.6.1 Annotations practices 注解实践
 
-According to the Android code style guide, the standard practices for some of the predefined annotations in Java are:
+根据安卓代码风格指南，在Java中的一些预定义注解的标准做法是：
 
-* `@Override`: The @Override annotation __must be used__ whenever a method overrides the declaration or implementation from a super-class. For example, if you use the @inheritdocs Javadoc tag, and derive from a class (not an interface), you must also annotate that the method @Overrides the parent class's method.
+* `@Override`：在方法重写申明或者从父类实现时必须使用 @Override注解。举个栗子，如果你使用@inheritdocs Javadoc 标签，并且定义在一个类中（非接口），你必须也在父类中使用@Override来注解改方法。
 
-* `@SuppressWarnings`: The @SuppressWarnings annotation should only be used under circumstances where it is impossible to eliminate a warning. If a warning passes this "impossible to eliminate" test, the @SuppressWarnings annotation must be used, so as to ensure that all warnings reflect actual problems in the code.
+* `@SuppressWarnings`: 在不可能消除警告的情况下应该使用@SuppressWarnings注解。如果警告通过这个“不可能消除”测试，那么@SuppressWarnings注解必须被使用，以便确保所有警告反映代码中的实际问题。
 
-More information about annotation guidelines can be found [here](http://source.android.com/source/code-style.html#use-standard-java-annotations).
+更多关于注解指导文档 [here](http://source.android.com/source/code-style.html#use-standard-java-annotations)。
 
 #### 2.2.6.2 Annotations style
 
 __Classes, Methods and Constructors__
 
-When annotations are applied to a class, method, or constructor, they are listed after the documentation block and should appear as __one annotation per line__ .
+当注解被应用到类，方法，构造函数，它们在注释文档块之后列出，并且格式为__一个注解占一行__。
 
 ```java
 /* This is the documentation block about the class */
@@ -249,21 +249,24 @@ public class MyAnnotatedClass { }
 
 __Fields__
 
-Annotations applying to fields should be listed __on the same line__, unless the line reaches the maximum line length.
+当注解应用于字段时，它们应该和字段在__同一行被列出__，超过单行最大长度情况除外。
 
 ```java
 @Nullable @Mock DataManager mDataManager;
 ```
 
-### 2.2.7 Limit variable scope
+### 2.2.7 Limit variable scope 限制变量作用域
 
-_The scope of local variables should be kept to a minimum (Effective Java Item 29). By doing so, you increase the readability and maintainability of your code and reduce the likelihood of error. Each variable should be declared in the innermost block that encloses all uses of the variable._
+_局部变量的作用范围应该控制到最小（Effective Java Item 29）。通过这样做，你提高了代码的可读性和可维护性，减少了错误的可能性。每个变量都应该在语句块内被声明和使用。_
 
-_Local variables should be declared at the point they are first used. Nearly every local variable declaration should contain an initializer. If you don't yet have enough information to initialize a variable sensibly, you should postpone the declaration until you do._ - ([Android code style guidelines](https://source.android.com/source/code-style.html#limit-variable-scope))
+_局部变量应该在第一次使用时完成声明。几乎每一个局部变量声明必须包含一个初始化。如果你还没有足够的信息来初始化一个变量是明智的，你应该推迟直到你要使用时在完成声明。_- ([Android code style guidelines](https://source.android.com/source/code-style.html#limit-variable-scope))
 
-### 2.2.8 Order import statements
+
+### 2.2.8 Order import statements 导包语句的顺序
 
 If you are using an IDE such as Android Studio, you don't have to worry about this because your IDE is already obeying these rules. If not, have a look below.
+
+如果你使用的是类似Android studio的开发工具，你不需要担心这个，因为IDE已经遵守了这些规则。如果不是，请看以下内容。
 
 The ordering of import statements is:
 
@@ -277,11 +280,11 @@ To exactly match the IDE settings, the imports should be:
 * Alphabetically ordered within each grouping, with capital letters before lower case letters (e.g. Z before a).
 * There should be a blank line between each major grouping (android, com, junit, net, org, java, javax).
 
-More info [here](https://source.android.com/source/code-style.html#limit-variable-scope)
+更多信息 [here](https://source.android.com/source/code-style.html#limit-variable-scope)
 
-### 2.2.9 Logging guidelines
+### 2.2.9 Logging guidelines 日志
 
-Use the logging methods provided by the `Log` class to print out error messages or other information that may be useful for developers to identify issues:
+使用`Log`类提供的打印log的方法，你可以打印错误消息或者其它消息，这样有助于开发者识别和发现问题：
 
 * `Log.v(String tag, String msg)` (verbose)
 * `Log.d(String tag, String msg)` (debug)
@@ -289,7 +292,7 @@ Use the logging methods provided by the `Log` class to print out error messages 
 * `Log.w(String tag, String msg)` (warning)
 * `Log.e(String tag, String msg)` (error)
 
-As a general rule, we use the class name as tag and we define it as a `static final` field at the top of the file. For example:
+作为一般规则，我们使用一个类名作为tag并且我们把它定义为`static final`类型的字段放在文件顶部。举个栗子：
 
 ```java
 public class MyClass {
@@ -300,8 +303,7 @@ public class MyClass {
     }
 }
 ```
-
-VERBOSE and DEBUG logs __must__ be disabled on release builds. It is also recommended to disable INFORMATION, WARNING and ERROR logs but you may want to keep them enabled if you think they may be useful to identify issues on release builds. If you decide to leave them enabled, you have to make sure that they are not leaking private information such as email addresses, user ids, etc.
+release版本__必须__关掉VERBOSE 和 DEBUG 日志。我们也建议关掉INFORMATION, WARNING 和 ERROR 日志，但如果你想在release版本也能收集一些有用的日志以便定位问题，在这种情况下你可能会保留它们。只要你决定保留它们（在release版本），你就必须保证它们不会泄露敏感信息，比如邮箱地址，用户id，等等。
 
 To only show logs on debug builds:
 
@@ -309,9 +311,9 @@ To only show logs on debug builds:
 if (BuildConfig.DEBUG) Log.d(TAG, "The value of x is " + x);
 ```
 
-### 2.2.10 Class member ordering
+### 2.2.10 Class member ordering 类成员排序
 
-There is no single correct solution for this but using a __logical__ and __consistent__ order will improve code learnability and readability. It is recommendable to use the following order:
+这个没有官方标准，但是使用__逻辑__和__一致的__（using a __logical__ and __consistent__）排序会提高代码的可学习型和可读性。这里推荐使用以下顺序：
 
 1. Constants
 2. Fields
@@ -349,7 +351,7 @@ public class MainActivity extends Activity {
 }
 ```
 
-If your class is extending an __Android component__ such as an Activity or a Fragment, it is a good practice to order the override methods so that they __match the component's lifecycle__. For example, if you have an Activity that implements `onCreate()`, `onDestroy()`, `onPause()` and `onResume()`, then the correct order is:
+如果你的类继承至__安卓系统组件__，比如Activity、Fragment，这是一个很好的例子来排序其实现父类的__生命周期__方法。举个栗子，如果你有一个Activity，并且实现了`onCreate()`, `onDestroy()`, `onPause()` and `onResume()`,那么，它们的顺序应该是：
 
 ```java
 public class MainActivity extends Activity {
@@ -370,11 +372,11 @@ public class MainActivity extends Activity {
 }
 ```
 
-### 2.2.11 Parameter ordering in methods
+### 2.2.11 Parameter ordering in methods 方法参数的排序
 
-When programming for Android, it is quite common to define methods that take a `Context`. If you are writing a method like this, then the __Context__ must be the __first__ parameter.
+开发安卓过程中，定义一个方法其带了`Context`参数是很常见的。如果你写了一个这样的方法，那么 __Context__ 必须是第一个参数。
 
-The opposite case are __callback__ interfaces that should always be the __last__ parameter.
+另一种情况，当定义个 __callback__ 接口参数时，应该将其放在**最后一个**参数位置。
 
 Examples:
 
@@ -386,11 +388,11 @@ public User loadUser(Context context, int userId);
 public void loadUserAsync(Context context, int userId, UserCallback callback);
 ```
 
-### 2.2.13 String constants, naming, and values
+### 2.2.13 String constants, naming, and values 字符串常量、命名、赋值
 
-Many elements of the Android SDK such as `SharedPreferences`, `Bundle`, or `Intent` use a key-value pair approach so it's very likely that even for a small app you end up having to write a lot of String constants.
+许多Android API都是提供了键值对的方法，比如`SharedPreferences`、`Bundle`、`Intent`类，所以很有可能你不得不写很多字符串常量，即使是一个小应用程序。
 
-When using one of these components, you __must__ define the keys as a `static final` fields and they should be prefixed as indicated below.
+当使用这些组件时，你__必须__定义一些`static final`类型的字段，所以应该为其加一个前缀来区分。
 
 | Element            | Field Name Prefix |
 | -----------------  | ----------------- |
@@ -400,7 +402,7 @@ When using one of these components, you __must__ define the keys as a `static fi
 | Intent Extra       | `EXTRA_`            |
 | Intent Action      | `ACTION_`           |
 
-Note that the arguments of a Fragment - `Fragment.getArguments()` - are also a Bundle. However, because this is a quite common use of Bundles, we define a different prefix for them.
+请注意，尽管Fragment的arguments- `Fragment.getArguments()` -也是一个Bundle。但是，因为它是一个相当常见的Bundles,所以我们就为其定义一个不同的前缀。
 
 Example:
 
@@ -415,13 +417,13 @@ static final String EXTRA_SURNAME = "com.myapp.extras.EXTRA_SURNAME";
 static final String ACTION_OPEN_USER = "com.myapp.action.ACTION_OPEN_USER";
 ```
 
-### 2.2.14 Arguments in Fragments and Activities
+### 2.2.14 参数在 Fragments 和 Activities
 
-When data is passed into an `Activity `or `Fragment` via an `Intent` or a `Bundle`, the keys for the different values __must__ follow the rules described in the section above.
+当通过`Intent`或者`Bundle`将数据传入一个`Activity `或者 `Fragment`时，那些key值的字符串必须遵循上一章节（2.2.13）定义的规则。
 
-When an `Activity` or `Fragment` expects arguments, it should provide a `public static` method that facilitates the creation of the relevant `Intent` or `Fragment`.
+当一个`Activity `或者 `Fragment`期望参数时，它应该提供一个`public static`类型的，可创建 `Intent` or `Fragment`的便利方法。
 
-In the case of Activities the method is usually called `getStartIntent()`:
+在Activity中使用的情况下，该方法名通常被定义为`getStartIntent()`:
 
 ```java
 public static Intent getStartIntent(Context context, User user) {
@@ -431,7 +433,7 @@ public static Intent getStartIntent(Context context, User user) {
 }
 ```
 
-For Fragments it is named `newInstance()` and handles the creation of the Fragment with the right arguments:
+对于Fragments 它被命名为`newInstance()`并且使用正确的参数来创建Fragment：
 
 ```java
 public static UserFragment newInstance(User user) {
@@ -443,48 +445,45 @@ public static UserFragment newInstance(User user) {
 }
 ```
 
-__Note 1__: These methods should go at the top of the class before `onCreate()`.
+__Note 1__: 这些方法应该放在类的顶部，在方法`onCreate()`前。
+__Note 2__: 如果我们在顶部声明了这些方法，那些用于extras和arguments的keys(常量字符串)应该定义为`private`，因为它们已经不需要对外部类提供访问权限了。
 
-__Note 2__: If we provide the methods described above, the keys for extras and arguments should be `private` because there is not need for them to be exposed outside the class.
+### 2.2.15 Line length limit 行长度限制
 
-### 2.2.15 Line length limit
+代码行不应该超过**100个字符**。如果超过了这个限制，通常有两种方式来减小其长度。
 
-Code lines should not exceed __100 characters__. If the line is longer than this limit there are usually two options to reduce its length:
+* 提取局部变量或方法（优选）。
+* 应用换行将一行分割成多行。
 
-* Extract a local variable or method (preferable).
-* Apply line-wrapping to divide a single line into multiple ones.
 
-There are two __exceptions__ where it is possible to have lines longer than 100:
+有两个__例外__，可能有超过100的行：
+* 不能拆分的行，例如注释中的长URL。
+* 包和导入语句。
 
-* Lines that are not possible to split, e.g. long URLs in comments.
-* `package` and `import` statements.
+#### 2.2.15.1 Line-wrapping strategies 换行策略
 
-#### 2.2.15.1 Line-wrapping strategies
+没有一个确切的公式来解释如何换行，并且有很多不同的解决方案也是有效的。然而，有几个规则，可以适用于一些常见的情况。
 
-There isn't an exact formula that explains how to line-wrap and quite often different solutions are valid. However there are a few rules that can be applied to common cases.
+__操作符__
 
-__Break at operators__
-
-When the line is broken at an operator, the break comes __before__ the operator. For example:
+当换行的地方有操作符时，换行应该在操作符__之前__。举例：
 
 ```java
 int longName = anotherVeryLongVariable + anEvenLongerOne - thisRidiculousLongOne
         + theFinalOne;
 ```
 
-__Assignment Operator Exception__
-
-An exception to the `break at operators` rule is the assignment operator `=`, where the line break should happen __after__ the operator.
+__赋值操作符__
+赋值操作符是一个例外。它的换行操作应该在赋值操作符__之后__。
 
 ```java
 int longName =
         anotherVeryLongVariable + anEvenLongerOne - thisRidiculousLongOne + theFinalOne;
 ```
 
-__Method chain case__
+__方法链__
 
-When multiple methods are chained in the same line - for example when using Builders - every call to a method should go in its own line, breaking the line before the `.`
-
+当更多的方法被串连在同一行时 - 比如适用Builders - 所有的方法调用都在同一行，这时，换行应该在`.`之前。
 ```java
 Picasso.with(context).load("http://ribot.co.uk/images/sexyjoe.jpg").into(imageView);
 ```
@@ -495,9 +494,9 @@ Picasso.with(context)
         .into(imageView);
 ```
 
-__Long parameters case__
+__很多参数的情况__
 
-When a method has many parameters or its parameters are very long, we should break the line after every comma `,`
+当一个方法有很多参数或者它的参数很长，我们应该在每一个逗号`,`前换行。
 
 ```java
 loadPicture(context, "http://ribot.co.uk/images/sexyjoe.jpg", mImageViewProfilePicture, clickListener, "Title of the picture");
@@ -511,9 +510,9 @@ loadPicture(context,
         "Title of the picture");
 ```
 
-### 2.2.16 RxJava chains styling
+### 2.2.16 RxJava 链式风格
 
-Rx chains of operators require line-wrapping. Every operator must go in a new line and the line should be broken before the `.`
+Rx 链式操作应该换行。每一个操作必须在新的一行，换行操作应该在`.`之前。
 
 ```java
 public Observable<Location> syncLocations() {
@@ -532,13 +531,11 @@ public Observable<Location> syncLocations() {
             });
 }
 ```
+## 2.3 XML 样式规则
 
-## 2.3 XML style rules
+### 2.3.1 自关闭标签
 
-### 2.3.1 Use self closing tags
-
-When an XML element doesn't have any contents, you __must__ use self closing tags.
-
+当一个XML元素没有子元素时，你**必须**使用自关闭标签。
 This is good:
 
 ```xml
@@ -560,13 +557,13 @@ This is __bad__ :
 ```
 
 
-### 2.3.2 Resources naming
+### 2.3.2 资源文件命名
 
-Resource IDs and names are written in __lowercase_underscore__.
+资源的IDs和names使用__小写+下划线__。
 
-#### 2.3.2.1 ID naming
+#### 2.3.2.1 ID 命名
 
-IDs should be prefixed with the name of the element in lowercase underscore. For example:
+IDs 应该使用组件名称的小写字母+下划线作为前缀。举个栗子：
 
 
 | Element            | Prefix            |
@@ -595,9 +592,9 @@ Menu example:
 </menu>
 ```
 
-#### 2.3.2.2 Strings
+#### 2.3.2.2 Strings 字符资源
 
-String names start with a prefix that identifies the section they belong to. For example `registration_email_hint` or `registration_name_hint`. If a string __doesn't belong__ to any section, then you should follow the rules below:
+String字符命名以其定义的模块名为前缀。比如，`registration_email_hint` 或者 `registration_name_hint`。如果一个String不属于任何模块，那你应该遵守如下规则：
 
 
 | Prefix             | Description                           |
@@ -609,13 +606,15 @@ String names start with a prefix that identifies the section they belong to. For
 
 
 
-#### 2.3.2.3 Styles and Themes
+#### 2.3.2.3 Styles and Themes 样式和主题
 
 Unless the rest of resources, style names are written in __UpperCamelCase__.
+除非依赖资源，样式命名遵循**驼峰式**。
 
-### 2.3.3 Attributes ordering
+### 2.3.3 Attributes ordering 属性定义顺序
 
 As a general rule you should try to group similar attributes together. A good way of ordering the most common attributes is:
+作为一般规则，你应该尝试将类似的属性组合在一起。一个常见的排序方法：
 
 1. View Id
 2. Style
@@ -623,11 +622,12 @@ As a general rule you should try to group similar attributes together. A good wa
 4. Other layout attributes, sorted alphabetically
 5. Remaining attributes, sorted alphabetically
 
-## 2.4 Tests style rules
+## 2.4 Tests style rules 测试样式规则
 
-### 2.4.1 Unit tests
+### 2.4.1 Unit tests 单元测试
 
 Test classes should match the name of the class the tests are targeting, followed by `Test`. For example, if we create a test class that contains tests for the `DatabaseHelper`, we should name it `DatabaseHelperTest`.
+测试类名应该和被测试的目标类匹配，在末尾加上`Test`。
 
 Test methods are annotated with `@Test` and should generally start with the name of the method that is being tested, followed by a precondition and/or expected behaviour.
 
