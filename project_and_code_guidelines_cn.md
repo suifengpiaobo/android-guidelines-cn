@@ -1,3 +1,8 @@
+### 说明
+- 此项目fork于 [project_and_code_guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)。 在此基础上翻译的中文文档。水平有限，若有错误之处，请指正。
+- 文中提到的约定均属开发建议。
+- 标题后若加了**星（\*）号**，则表示**必须遵守**。
+
 # 1. 项目
 
 ## 1.1 项目结构
@@ -6,17 +11,17 @@
 
 ## 1.2 文件命名
 
-### 1.2.1 类文件
+### 1.2.1 类文件（*）
 类的命名方法应该为驼峰式 [UpperCamelCase](http://en.wikipedia.org/wiki/CamelCase)。
 
 对于集成至安卓系统组件的类来说，其类名应该以相应组件名称结尾。比如：`SignInActivity`, `SignInFragment`, `ImageUploaderService`, `ChangePasswordDialog`。
 
 
-### 1.2.2 资源文件
+### 1.2.2 资源文件（*）
 
 资源文件命名采取小写字母+下划线方式。
 
-#### 1.2.2.1 Drawable 文件
+#### 1.2.2.1 Drawable 文件（*）
 
 drawable文件，命名约定：
 
@@ -55,7 +60,7 @@ selector 文件的命名约定：
 | Selected     | `_selected`     | `btn_order_selected.9.png`  |
 
 
-#### 1.2.2.2 布局文件
+#### 1.2.2.2 布局文件（*）
 
 布局文件命名需要匹配安卓组件的名字，但需要以组件名字开头。举个栗子，如果我们要为`SignInActivity`创建一个布局文件，其命名应该为`activity_sign_in.xml`。
 >如果不同模块有相同类名（少数情况），这里可加上模块前缀。
@@ -73,13 +78,13 @@ selector 文件的命名约定：
 | Partial layout   | ---                    | `partial_stats_bar.xml`       |
 
 
-#### 1.2.2.3 Menu 文件
+#### 1.2.2.3 Menu 文件（*）
 
 menu文件命名和layout文件类似。应该和安卓组件匹配。举个栗子，如果我们为`UserActivity`创建一个menu文件，那么其命名应该是`activity_user.xml`。
 
 一个好的做法是:不要包含`menu`这个单词，因为文件已经在`menu`这个文件夹下。
 
-#### 1.2.2.4 Values 文件
+#### 1.2.2.4 Values 文件（*）
 
 在values文件夹下的文件应该是复数形式，比如： `strings.xml`, `styles.xml`, `colors.xml`, `dimens.xml`, `attrs.xml`。
 
@@ -87,7 +92,7 @@ menu文件命名和layout文件类似。应该和安卓组件匹配。举个栗�
 
 ## 2.1 Java 语言规则
 
-### 2.1.1 请勿忽略异常
+### 2.1.1 请勿忽略异常（*）
 
 你一定不能这样做:
 
@@ -105,7 +110,7 @@ _你可能会认为这个异常情况永远不会出现，或者没必要处理�
 
 更多资料请查询官网 [here](https://source.android.com/source/code-style.html#dont-ignore-exceptions)。
 
-### 2.1.2 不要只捕获基类异常（Throwable、Exception）
+### 2.1.2 不要只捕获基类异常（Throwable、Exception）（*）
 
 你不应该这样写:
 
@@ -390,7 +395,7 @@ public User loadUser(Context context, int userId);
 public void loadUserAsync(Context context, int userId, UserCallback callback);
 ```
 
-### 2.2.13 String constants, naming, and values 字符串常量、命名、赋值
+### 2.2.13 String constants, naming, and values 字符串常量、命名、赋值（*）
 
 许多Android API都是提供了键值对的方法，比如`SharedPreferences`、`Bundle`、`Intent`类，所以很有可能你不得不写很多字符串常量，即使是一个小应用程序。
 
@@ -463,7 +468,7 @@ __Note 2__: 如果我们在顶部声明了这些方法，那些用于extras和ar
 * 不能拆分的行，例如注释中的长URL。
 * 包和导入语句。
 
-#### 2.2.15.1 Line-wrapping strategies 换行策略
+#### 2.2.15.1 Line-wrapping strategies 换行策略（*）
 
 没有一个确切的公式来解释如何换行，并且有很多不同的解决方案也是有效的。然而，有几个规则，可以适用于一些常见的情况。
 
@@ -536,7 +541,7 @@ public Observable<Location> syncLocations() {
 ```
 ## 2.3 XML 样式规则
 
-### 2.3.1 自关闭标签
+### 2.3.1 自关闭标签（*）
 
 当一个XML元素没有子元素时，你**必须**使用自关闭标签。
 
@@ -565,7 +570,7 @@ This is __bad__ :
 
 资源的IDs和names使用__小写+下划线__。
 
-#### 2.3.2.1 ID 命名
+#### 2.3.2.1 ID 命名（*）
 
 IDs 应该使用组件名称的小写字母+下划线作为前缀。举个栗子：
 
@@ -596,7 +601,7 @@ Menu example:
 </menu>
 ```
 
-#### 2.3.2.2 Strings 字符资源
+#### 2.3.2.2 Strings 字符资源（*）
 
 String字符命名以其定义的模块名为前缀。比如，`registration_email_hint` 或者 `registration_name_hint`。如果一个String不属于任何模块，那你应该遵守如下规则：
 
